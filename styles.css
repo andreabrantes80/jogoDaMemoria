@@ -36,84 +36,127 @@
 } */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 10px;
-    box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 h1 {
-    font-size: clamp(1.5rem, 5vw, 2rem);
-    margin-bottom: 1rem;
-    text-align: center;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 #timer {
-    font-size: clamp(1rem, 4vw, 1.2rem);
-    margin-bottom: 1rem;
-    color: #333;
-    font-weight: bold;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .tabuleiro {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
-    padding: 10px;
-    box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .carta {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background-color: #ccc;
-    border: 1px solid #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #ccc;
+  border: 1px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carta img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#iconeTempo {
+  font-size: clamp(1.5rem, 5vw, 2rem); /* Larger font size */
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif; /* Ensure font supports arrows */
+  display: inline-block;
+  min-width: 100px; /* Ample space for text */
+  text-align: center;
+  padding: 5px 10px;
+  background-color: #ffffff; /* Solid white background */
+  border: 2px solid #333; /* Border for visibility */
+  border-radius: 5px;
+  z-index: 100; /* High z-index to avoid overlap */
+
+  visibility: visible; /* Ensure visibility */
+}
+
+.seta-verde {
+  color: #28a745; /* Brighter green */
+  font-weight: bold;
+  background-color: #e6ffe6; /* Light green background for contrast */
+}
+
+.seta-vermelha {
+  color: #dc3545; /* Brighter red */
+  font-weight: bold;
+  background-color: #ffe6e6; /* Light red background for contrast */
 }
 
 /* Media query para telas médias (tablets) */
 @media (max-width: 768px) {
-    .tabuleiro {
-        max-width: 450px;
-        gap: 8px;
-    }
+  .tabuleiro {
+    max-width: 450px;
+    gap: 8px;
+  }
+  #iconeTempo {
+    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    min-width: 50px;
+  }
 }
 
 /* Media query para telas menores (celulares) */
 @media (max-width: 480px) {
-    .tabuleiro {
-        max-width: 100%;
-        gap: 6px;
-    }
+  .tabuleiro {
+    max-width: 100%;
+    gap: 6px;
+  }
 
-    h1 {
-        font-size: clamp(1.2rem, 4vw, 1.5rem);
-    }
+  h1 {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+  }
+  #iconeTempo {
+    font-size: clamp(0.9rem, 3vw, 1rem);
+    min-width: 40px;
+  }
 }
 
 /* Media query para telas muito pequenas */
 @media (max-width: 360px) {
-    .tabuleiro {
-        gap: 4px;
-    }
+  .tabuleiro {
+    gap: 4px;
+  }
+  #iconeTempo {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    min-width: 30px;
+  }
 }

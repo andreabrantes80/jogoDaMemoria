@@ -25,7 +25,7 @@ function iniciarJogo() {
   for (let i = 0; i < imagensEmbaralhadas.length; i++) {
     const carta = document.createElement("div");
     carta.classList.add("carta");
-    carta.innerHTML = `<img src="img/verso.jpg" alt="Verso da carta" data-imagem=" img/${imagensEmbaralhadas[i]}">`;
+    carta.innerHTML = `<img src="img/verso.jpg" alt="Verso da carta" data-imagem="img/${imagensEmbaralhadas[i]}">`;
     tabuleiro.appendChild(carta);
   }
 
@@ -33,10 +33,20 @@ function iniciarJogo() {
   let cartaVirada = null;
   let travarTabuleiro = true;
   let paresEncontrados = 0;
-  let tempoRestante = 300; // 5 minutos em segundos
+  let tempoRestante = 180;
   let timerId = null;
 
   const timerElement = document.querySelector("#timer");
+  let tempoElement = document.querySelector("#tempo");
+
+
+  if (!tempoElement) {
+
+    tempoElement = document.createElement("span");
+    tempoElement.id = "tempo";
+    tempoElement.textContent = "3:00";
+    timerElement.appendChild(tempoElement);
+  }
 
   mostrarImagens();
 
@@ -60,10 +70,10 @@ function iniciarJogo() {
       .padStart(2, "0")}`;
   }
 
-  function adicionarTempo() {
-    tempoRestante += 30; // Adiciona 30 segundos
-    timerElement.textContent = formatarTempo(tempoRestante);
-  }
+  // function adicionarTempo() {
+  //   tempoRestante += 30; // Adiciona 30 segundos
+  //   timerElement.textContent = formatarTempo(tempoRestante);
+  // }
 
   function mostrarImagens() {
     cartas.forEach((carta) => {
@@ -123,6 +133,7 @@ function iniciarJogo() {
         carta1.querySelector("img").src = "img/verso.jpg";
         carta2.querySelector("img").src = "img/verso.jpg";
 
+        removerTempo();
         travarTabuleiro = false;
       }, 2000);
     }
@@ -135,7 +146,7 @@ function iniciarJogo() {
       );
 
       iniciarJogo();
-    }, 5000);
+    }, 3000);
   }
 
   function gameOver() {
@@ -151,18 +162,59 @@ function iniciarJogo() {
 
   function embaralhar(array) {
     let currentIndex = array.length,
-      temporalyValue,
+      temporaryValue,
       randomIndex;
 
     while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
-      temporalyValue = array[currentIndex];
+      temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporalyValue;
+      array[randomIndex] = temporaryValue;
     }
 
     return array;
+  }
+
+  function atualizarIcone(icone, cor) {
+    let iconeTempo = document.querySelector("#iconeTempo");
+    const timerElement = document.querySelector("#timer");
+
+    if (!iconeTempo) {
+      console.warn(
+        "Elemento #iconeTempo não encontrado. Criando dinamicamente."
+      );
+      iconeTempo = document.createElement("span");
+      iconeTempo.id = "iconeTempo";
+      timerElement.appendChild(iconeTempo);
+    }
+    console.log(`Atualizando ícone: ${icone}, classe: ${cor}`);
+    iconeTempo.textContent = icone;
+    iconeTempo.className = cor;
+
+    // Forçar re-renderização
+    iconeTempo.style.display = 'none';
+    iconeTempo.offsetHeight; // Trigger reflow
+    iconeTempo.style.display = 'inline-block';
+
+    // Remove o ícone após 3 segundos
+    setTimeout(() => {
+      iconeTempo.textContent = "";
+    }, 5000);
+
+  }
+
+  function adicionarTempo() {
+    tempoRestante += 5; // Adiciona 5 segundos
+    timerElement.textContent = formatarTempo(tempoRestante);
+    atualizarIcone("▲ +5s", "seta-verde");
+  }
+
+  function removerTempo() {
+    tempoRestante -= 5; // Remove 5 segundos
+    if (tempoRestante < 0) tempoRestante = 0; // Garante que não fique negativo
+    timerElement.textContent = formatarTempo(tempoRestante);
+    atualizarIcone("▼ -5s", "seta-vermelha");
   }
 }
